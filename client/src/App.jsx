@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 import Graph from './components/graph'
+import Heatmap from './components/heatmap'
 
 function App() {
-  const [data, setData] = useState(null)
+  const [data, setData] = useState([])
   const [loading, setLoading] = useState(true)
   const [selectedOption, setSelectedOption] = useState('pos_x')
   useEffect(() => {
@@ -12,7 +13,6 @@ function App() {
       const { data } = response
       setData(data)
       setLoading(false)
- 
     }
     fetchHumans()
   }, [])
@@ -38,6 +38,7 @@ function App() {
           <option value='nbHumans'>number of humans</option>
         </select>
         {data ? <Graph data={data} selectedOption={selectedOption} /> : <></>}
+        {data.length > 0 ? <Heatmap data={data} /> : <></>}
       </div>
     </div>
   )

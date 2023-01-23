@@ -27,7 +27,9 @@ router.get('/', async (req, res) => {
           },
         },
       },
-    ]).limit(80)
+    ])
+      .limit(80)
+      .sort({ timestamp: -1 })
 
     // console.log(humans)
     res.status(200).json(humans)
