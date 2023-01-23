@@ -9,13 +9,23 @@ import {
 
 const Graph = ({ data, selectedOption }) => {
   ChartJS.register(LineElement, CategoryScale, LinearScale, PointElement)
+  const selectedData =
+    selectedOption === 'nbHumans'
+      ? data.map((d) => d.nbHumans)
+      : data
+          ?.map((d) =>
+            d?.instances
+              .filter((c) => c !== null)
+              .map((c) => c.pos_x.toFixed(2))
+          )
+          .flat()
 
   const graphData = {
     labels: data.map((d) => d.timestamp),
     datasets: [
       {
         label: 'X',
-        data: data.map((d) => d.instances[0][selectedOption]),
+        data: selectedData,
         fill: false,
         backgroundColor: 'rgb(255, 99, 132)',
         borderColor: 'rgba(255, 99, 132, 0.2)',
@@ -42,8 +52,10 @@ const Graph = ({ data, selectedOption }) => {
     <div className='text-center py-10'>
       <h1>
         GRAPH with X axis for timestamp and Y axis depends on the selected data
-        {selectedOption}
       </h1>
+      {/* {data?.map((d) =>
+        d?.instances?.map((c) => <h2>{c.pos_x && 'hhhhhh'}</h2>)
+      )} */}
       <div>
         <div>
           <Line data={graphData} options={options} />

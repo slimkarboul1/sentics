@@ -12,7 +12,7 @@ function App() {
       const { data } = response
       setData(data)
       setLoading(false)
-      console.log(data)
+ 
     }
     fetchHumans()
   }, [])
@@ -22,8 +22,8 @@ function App() {
       <h1 className='text-3xl text-blue-500'>Sentics Project </h1>
       <div className='w-2/3 h-2/3'>
         <label
-          for='select'
-          class='block mb-2 text-sm font-medium text-gray-900 dark:text-white'
+          htmlFor='select'
+          className='block mb-2 text-sm font-medium text-gray-900 dark:text-white'
         >
           Select an option
         </label>
@@ -37,8 +37,7 @@ function App() {
           <option value='pos_x'>Humamn position X</option>
           <option value='nbHumans'>number of humans</option>
         </select>
-
-        {/* <Graph data={data} /> */}
+        {data ? <Graph data={data} selectedOption={selectedOption} /> : <></>}
       </div>
     </div>
   )
