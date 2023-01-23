@@ -11,7 +11,6 @@ dotenv.config()
 connectDB()
 
 app.use(errorHandler)
-app.use(notFound)
 
 app.use('/humans', humanRouter)
 

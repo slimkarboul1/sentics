@@ -42,29 +42,18 @@ const Heatmapp = ({ data }) => {
           .flat()
       )
     )
-    console.log('maxPosX', maxPosX)
 
     data?.length &&
       data?.map((d) => {
         const timestampdiff =
           toTimestamp(data[0].timestamp) - toTimestamp(d.timestamp)
         const posXDiff = maxPosX - minPosX
-        console.log('posxDiff', posXDiff)
+
         const maxTimestamp =
           toTimestamp(data[0].timestamp) -
           toTimestamp(data[data.length - 1].timestamp)
         max = Math.max(max, d.nbHumans)
-        console.log(
-          'PERCENTAGE : ',
-          parseInt(
-            d?.instances
-              .filter((c) => c !== null)
-              .map((c) => c.pos_x.toFixed(0))
-              .flat()[0]
-          ) *
-            (posXDiff / height) *
-            height
-        )
+
         var point = {
           // get the respective x value depending on the timestamp and the max timestamp value
           x: parseInt(((timestampdiff / maxTimestamp) * width).toFixed(0)),
@@ -89,7 +78,7 @@ const Heatmapp = ({ data }) => {
       max: max,
       data: points,
     }
-    console.log(heatmapdata)
+
     heatmapInstance.setData(heatmapdata)
   }, [])
 

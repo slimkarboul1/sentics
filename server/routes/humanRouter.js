@@ -31,7 +31,6 @@ router.get('/', async (req, res) => {
       .limit(1200)
       .sort({ timestamp: -1 })
 
-    // console.log(humans)
     res.status(200).json(humans)
   } catch (error) {
     res.status(404).json({ message: error.message })
