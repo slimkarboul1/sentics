@@ -2,13 +2,16 @@ import express from 'express'
 import dotenv from 'dotenv'
 import connectDB from './config/db.js'
 import humanRouter from './routes/humanRouter.js'
-import { crossOriginResourcePolicy } from 'helmet'
+import { errorHandler, notFound } from './middleware/errorMiddleware.js'
 
 const app = express()
 const port = process.env.PORT || 5000
 
 dotenv.config()
 connectDB()
+
+app.use(errorHandler)
+app.use(notFound)
 
 app.use('/humans', humanRouter)
 

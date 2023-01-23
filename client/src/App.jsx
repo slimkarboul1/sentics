@@ -16,7 +16,13 @@ function App() {
     }
     fetchHumans()
   }, [])
-  if (loading) return <h1>Loading...</h1>
+  if (loading)
+    return (
+      <div className='flex justify-center items-center h-screen'>
+        <div className=' text-3xl text-blue-700'>Loading...</div>
+      </div>
+    )
+
   return (
     <div className='flex flex-col items-center'>
       <h1 className='text-3xl text-blue-500'>Sentics Project </h1>

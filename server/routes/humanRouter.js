@@ -28,7 +28,7 @@ router.get('/', async (req, res) => {
         },
       },
     ])
-      .limit(80)
+      .limit(1200)
       .sort({ timestamp: -1 })
 
     // console.log(humans)

@@ -16,29 +16,70 @@ const Heatmapp = ({ data }) => {
     var max = 0
     var width = 840
     var height = 400
+    var maxPosX = parseInt(
+      Math.max(
+        ...data
+          ?.map((d) => {
+            return d?.instances
+              ?.filter((z) => z !== null)
+              .map((i) => {
+                return i?.pos_x
+              })
+          })
+          .flat()
+      )
+    )
+    var minPosX = parseInt(
+      Math.min(
+        ...data
+          ?.map((d) => {
+            return d?.instances
+              ?.filter((z) => z !== null)
+              .map((i) => {
+                return i?.pos_x
+              })
+          })
+          .flat()
+      )
+    )
+    console.log('maxPosX', maxPosX)
 
     data?.length &&
       data?.map((d) => {
-        // const timestampdiff =
-        //   toTimestamp(data[0].timestamp) - toTimestamp(d.timestamp)
-
-        // max = Math.max(max, d.nbHumans)
-        // var point = {
-        //   x: parseInt(timestampdiff).toFixed(0),
-        //   y: parseInt(
-        //     d?.instances
-        //       .filter((c) => c !== null)
-        //       .map((c) => c.pos_x.toFixed(2))
-        //       .flat()[0]
-        //   ),
-        //   value: d?.nbHumans,
-        // }
-        var val = Math.floor(Math.random() * 100)
-        max = Math.max(max, val)
+        const timestampdiff =
+          toTimestamp(data[0].timestamp) - toTimestamp(d.timestamp)
+        const posXDiff = maxPosX - minPosX
+        console.log('posxDiff', posXDiff)
+        const maxTimestamp =
+          toTimestamp(data[0].timestamp) -
+          toTimestamp(data[data.length - 1].timestamp)
+        max = Math.max(max, d.nbHumans)
+        console.log(
+          'PERCENTAGE : ',
+          parseInt(
+            d?.instances
+              .filter((c) => c !== null)
+              .map((c) => c.pos_x.toFixed(0))
+              .flat()[0]
+          ) *
+            (posXDiff / height) *
+            height
+        )
         var point = {
-          x: Math.floor(Math.random() * width),
-          y: Math.floor(Math.random() * height),
-          value: val,
+          // get the respective x value depending on the timestamp and the max timestamp value
+          x: parseInt(((timestampdiff / maxTimestamp) * width).toFixed(0)),
+          y: parseInt(
+            // get the respective pos_x depending on the hight of the heatmap and the max pos_x value
+            parseInt(
+              d?.instances
+                .filter((c) => c !== null)
+                .map((c) => c.pos_x.toFixed(0))
+                .flat()[0]
+            ) *
+              (posXDiff / height) * // get the percentage of the pos_x value
+              height // multiply by the height of the heatmap
+          ),
+          value: d?.nbHumans,
         }
 
         points.push(point)
