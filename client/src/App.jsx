@@ -1,7 +1,36 @@
+import { useEffect, useState } from 'react'
+import axios from 'axios'
+import Graph from './components/graph'
+
 function App() {
+  const [data, setData] = useState(null)
+  const [loading, setLoading] = useState(true)
+  const [selectedOption, setSelectedOption] = useState('')
+  useEffect(() => {
+    const fetchHumans = async () => {
+      const response = await axios.get('/humans')
+      const { data } = response
+      setData(data)
+      setLoading(false)
+      console.log(data)
+    }
+    fetchHumans()
+  }, [])
+  if (loading) return <h1>Loading...</h1>
   return (
-    <div className='App'>
-      <h1 className='text-gray-500 text-xl'> ok ok </h1>
+    <div className='flex flex-col items-center'>
+      <h1 className='text-3xl text-blue-500'>Sentics Project </h1>
+      <div className='w-2/3 h-2/3'>
+        <select
+          value={selectedOption}
+          onChange={(e) => setSelectedOption(e.target.value)}
+        >
+          <option value='pos_x'>pos_x</option>
+          <option value='nbHumans'>nbHumans</option>
+        </select>
+
+        <Graph data={data} />
+      </div>
     </div>
   )
 }
