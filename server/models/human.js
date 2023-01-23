@@ -6,11 +6,6 @@ const humanSchema = new mongoose.Schema(
       type: Date,
       required: true,
     },
-    _id: {
-      type: ObjectId,
-      required: true,
-      unique: true,
-    },
     instances: {
       type: Object,
       required: true,
