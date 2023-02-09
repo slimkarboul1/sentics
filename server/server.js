@@ -2,7 +2,7 @@ import express from 'express'
 import dotenv from 'dotenv'
 import connectDB from './config/db.js'
 import humanRouter from './routes/humanRouter.js'
-import { errorHandler, notFound } from './middleware/errorMiddleware.js'
+import { errorHandler } from './middleware/errorMiddleware.js'
 
 const app = express()
 const port = process.env.PORT || 5000
